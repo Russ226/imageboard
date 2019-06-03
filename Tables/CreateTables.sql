@@ -35,3 +35,19 @@ CREATE TABLE IF NOT EXISTS imageBoard.comments(
   foreign key (post_id) REFERENCES posts(id),
   foreign key (comment_id) REFERENCES comments(id)
 );
+
+CREATE TABLE IF NOT EXISTS redditStalker.subBoards(
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255),
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS redditStalker.subBoardPostJoin(
+	id INT NOT NULL AUTO_INCREMENT,
+	subBoard_id INT NOT NULL,
+    subBoardName VARCHAR(255) NOT NULL,
+	post_id INT NOT NULL,
+	foreign key (post_id) REFERENCES posts(id),
+	foreign key (subBoard_id) REFERENCES subBoards(id),
+    PRIMARY KEY(id)
+);
