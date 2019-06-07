@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageBoard.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,17 @@ namespace ImageBoard.Controllers.Account
             return View();
         }
 
+        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Register() {
+            
+            return View("Registration");
+        }
+
+        [ActionName("Register")]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult RegisterPost(RegisterModel newUser)
+        {
+
             return View("Registration");
         }
     }
