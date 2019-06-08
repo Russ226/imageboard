@@ -178,6 +178,8 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Account\UserCookie.cs" />
+    <Compile Include="Controllers\Account\UserIdentity.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\comment.cs">
       <DependentUpon>ImageboardDB.tt</DependentUpon>
@@ -212,6 +214,7 @@
     </Compile>
     <Compile Include="Helpers\Exceptions\UserExistsException.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +313,8 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Account\Registration.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

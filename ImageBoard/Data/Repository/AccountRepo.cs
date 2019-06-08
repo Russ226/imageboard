@@ -42,6 +42,18 @@ namespace ImageBoard.Data.Repository
             _db.SaveChanges();
         }
 
+        public UserModel Login(RegisterModel loginUser) {
+            var getUser = _db.users.Where(x => x.username == loginUser.Username && x.password == loginUser.Password).FirstOrDefault();
+
+            if (getUser !=  null) {
+                UserModel user = new UserModel(getUser);
+                return user;
+            }
+
+            return null;
+
+        }
+
 
     }
 }

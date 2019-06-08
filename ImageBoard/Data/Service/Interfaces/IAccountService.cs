@@ -10,5 +10,6 @@ namespace ImageBoard.Data.Service.Interfaces
     public interface IAccountService
     {
         void RegisterUser(RegisterModel user);
+        UserModel Login(RegisterModel loginUser);
     }
 }

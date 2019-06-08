@@ -10,5 +10,7 @@ namespace ImageBoard.Data.Repository.Interfaces
     public interface IAccountRepo
     {
         void RegisterUser(RegisterModel user);
+
+        UserModel Login(RegisterModel loginUser);
     }
 }

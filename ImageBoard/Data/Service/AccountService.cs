@@ -20,5 +20,9 @@ namespace ImageBoard.Data.Service
         {
             _accountRepo.RegisterUser(user);
         }
+
+        public UserModel Login(RegisterModel loginUser) {
+            return _accountRepo.Login(loginUser);
+        }
     }
 }
