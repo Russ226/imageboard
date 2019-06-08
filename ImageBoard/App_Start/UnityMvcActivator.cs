@@ -22,17 +22,14 @@ namespace ImageBoard
         /// </summary>
         public static void Start() 
         {
-            var container = new UnityContainer();
-
+            
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
             FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
 
-            container.RegisterType<IAccountRepo, AccountRepo>();
-            container.RegisterType<IAccountService, AccountService>();
 
+           
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
-            DependencyResolver.SetResolver(container);
 
             // TODO: Uncomment if you want to use PerRequestLifetimeManager
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));

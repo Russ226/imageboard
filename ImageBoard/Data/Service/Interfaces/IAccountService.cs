@@ -9,6 +9,6 @@ namespace ImageBoard.Data.Service.Interfaces
 {
     public interface IAccountService
     {
-        bool RegisterUser(RegisterModel user);
+        void RegisterUser(RegisterModel user);
     }
 }

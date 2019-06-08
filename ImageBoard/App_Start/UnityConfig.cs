@@ -1,6 +1,12 @@
+using ImageBoard.Data.Repository;
+using ImageBoard.Data.Repository.Interfaces;
+using ImageBoard.Data.Service;
+using ImageBoard.Data.Service.Interfaces;
 using System;
-
+using System.Web.Http;
+using System.Web.Mvc;
 using Unity;
+using Unity.AspNet.Mvc;
 
 namespace ImageBoard
 {
@@ -36,6 +42,14 @@ namespace ImageBoard
         /// </remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
+           
+            container.RegisterType<IAccountRepo, AccountRepo>(new PerRequestLifetimeManager());
+            container.RegisterType<IAccountService, AccountService>(new PerRequestLifetimeManager());
+
+            //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+
+            //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+
             // NOTE: To load from web.config uncomment the line below.
             // Make sure to add a Unity.Configuration to the using statements.
             // container.LoadConfiguration();

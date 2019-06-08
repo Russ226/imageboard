@@ -12,7 +12,9 @@ namespace ImageBoard.Data.Repository
     {
         private imageboardEntities _db;
 
-        public AccountRepo() { }
+        public AccountRepo() {
+            _db = new imageboardEntities();
+        }
 
         #region private methods
 
