@@ -22,7 +22,7 @@ namespace ImageBoard.Data.Repository
             var checkUsername = _db.users.Where(x => x.username == username).FirstOrDefault();
             var checkEmail = _db.users.Where(x => x.username == username).FirstOrDefault();
 
-            return checkEmail != null || checkUsername != null? false : true;
+            return checkEmail != null || checkUsername != null? true : false;
         }
 
         #endregion
