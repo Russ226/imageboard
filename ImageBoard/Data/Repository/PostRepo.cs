@@ -31,7 +31,7 @@ namespace ImageBoard.Data.Repository
                             Link = postQ.link,
                             CreatedOn = postQ.created_on,
                             //should change this up later 
-                            Likes = postQ.postlikes.Where(x => x.post_id == postQ.id).Sum(y => int.Parse(y.liked.ToString()))
+                            //Likes = postQ.postlikes.Where(x => x.post_id == postQ.id).Sum(y => int.Parse(y.liked.ToString()))
                         };
 
             return query;
