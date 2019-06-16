@@ -12,29 +12,20 @@ namespace ImageBoard.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class subboard
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
+        public subboard()
         {
-            this.comments = new HashSet<comment>();
-            this.posts = new HashSet<post>();
-            this.postlikes = new HashSet<postlike>();
+            this.subboardpostjoins = new HashSet<subboardpostjoin>();
             this.subboardusersubs = new HashSet<subboardusersub>();
         }
     
         public int id { get; set; }
-        public string username { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
-        public System.DateTime created_on { get; set; }
+        public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<comment> comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<post> posts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<postlike> postlikes { get; set; }
+        public virtual ICollection<subboardpostjoin> subboardpostjoins { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<subboardusersub> subboardusersubs { get; set; }
     }

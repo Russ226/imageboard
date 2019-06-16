@@ -18,6 +18,8 @@ namespace ImageBoard.Data
         public post()
         {
             this.comments = new HashSet<comment>();
+            this.postlikes = new HashSet<postlike>();
+            this.subboardpostjoins = new HashSet<subboardpostjoin>();
         }
     
         public int id { get; set; }
@@ -30,5 +32,9 @@ namespace ImageBoard.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<comment> comments { get; set; }
         public virtual user user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<postlike> postlikes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<subboardpostjoin> subboardpostjoins { get; set; }
     }
 }

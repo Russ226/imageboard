@@ -28,5 +28,9 @@ namespace ImageBoard.Data
         public virtual DbSet<comment> comments { get; set; }
         public virtual DbSet<post> posts { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<postlike> postlikes { get; set; }
+        public virtual DbSet<subboardpostjoin> subboardpostjoins { get; set; }
+        public virtual DbSet<subboard> subboards { get; set; }
+        public virtual DbSet<subboardusersub> subboardusersubs { get; set; }
     }
 }

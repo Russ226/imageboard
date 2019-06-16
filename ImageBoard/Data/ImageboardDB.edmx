@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="imageboardModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="imageboardModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="comments">
           <Key>
             <PropertyRef Name="id" />
@@ -18,6 +18,15 @@
           <Property Name="post" Type="text" />
           <Property Name="created_on" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="postlikes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="post_id" Type="int" Nullable="false" />
+          <Property Name="liked" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="posts">
           <Key>
             <PropertyRef Name="id" />
@@ -28,6 +37,32 @@
           <Property Name="link" Type="varchar" MaxLength="255" />
           <Property Name="title" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="created_on" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subboardpostjoin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subBoard_id" Type="int" Nullable="false" />
+          <Property Name="subBoardName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="post_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="subboards">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="subboardusersubs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="subBoard_id" Type="int" Nullable="false" />
+          <Property Name="subBoardName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="isFavorite" Type="bit" />
         </EntityType>
         <EntityType Name="users">
           <Key>
@@ -75,6 +110,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="postlikes_ibfk_1">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="postlikes" Type="Self.postlikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlikes">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postlikes_ibfk_2">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="postlikes" Type="Self.postlikes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlikes">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="posts_ibfk_1">
           <End Role="users" Type="Self.users" Multiplicity="1" />
           <End Role="posts" Type="Self.posts" Multiplicity="*" />
@@ -87,9 +146,61 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="subboardpostjoin_ibfk_1">
+          <End Role="posts" Type="Self.posts" Multiplicity="1" />
+          <End Role="subboardpostjoin" Type="Self.subboardpostjoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="posts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardpostjoin">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardpostjoin_ibfk_2">
+          <End Role="subboards" Type="Self.subboards" Multiplicity="1" />
+          <End Role="subboardpostjoin" Type="Self.subboardpostjoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subboards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardpostjoin">
+              <PropertyRef Name="subBoard_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardusersubs_ibfk_1">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="subboardusersubs" Type="Self.subboardusersubs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardusersubs">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardusersubs_ibfk_2">
+          <End Role="subboards" Type="Self.subboards" Multiplicity="1" />
+          <End Role="subboardusersubs" Type="Self.subboardusersubs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subboards">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardusersubs">
+              <PropertyRef Name="subBoard_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="imageboardModelStoreContainer">
           <EntitySet Name="comments" EntityType="Self.comments" Schema="imageboard" store:Type="Tables" />
+          <EntitySet Name="postlikes" EntityType="Self.postlikes" Schema="imageboard" store:Type="Tables" />
           <EntitySet Name="posts" EntityType="Self.posts" Schema="imageboard" store:Type="Tables" />
+          <EntitySet Name="subboardpostjoin" EntityType="Self.subboardpostjoin" Schema="imageboard" store:Type="Tables" />
+          <EntitySet Name="subboards" EntityType="Self.subboards" Schema="imageboard" store:Type="Tables" />
+          <EntitySet Name="subboardusersubs" EntityType="Self.subboardusersubs" Schema="imageboard" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="imageboard" store:Type="Tables" />
           <AssociationSet Name="comments_ibfk_1" Association="Self.comments_ibfk_1">
             <End Role="users" EntitySet="users" />
@@ -103,13 +214,36 @@
             <End Role="comments" EntitySet="comments" />
             <End Role="comments1" EntitySet="comments" />
           </AssociationSet>
+          <AssociationSet Name="postlikes_ibfk_1" Association="Self.postlikes_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="postlikes" EntitySet="postlikes" />
+          </AssociationSet>
+          <AssociationSet Name="postlikes_ibfk_2" Association="Self.postlikes_ibfk_2">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="postlikes" EntitySet="postlikes" />
+          </AssociationSet>
           <AssociationSet Name="posts_ibfk_1" Association="Self.posts_ibfk_1">
             <End Role="users" EntitySet="users" />
             <End Role="posts" EntitySet="posts" />
           </AssociationSet>
+          <AssociationSet Name="subboardpostjoin_ibfk_1" Association="Self.subboardpostjoin_ibfk_1">
+            <End Role="posts" EntitySet="posts" />
+            <End Role="subboardpostjoin" EntitySet="subboardpostjoin" />
+          </AssociationSet>
+          <AssociationSet Name="subboardpostjoin_ibfk_2" Association="Self.subboardpostjoin_ibfk_2">
+            <End Role="subboards" EntitySet="subboards" />
+            <End Role="subboardpostjoin" EntitySet="subboardpostjoin" />
+          </AssociationSet>
+          <AssociationSet Name="subboardusersubs_ibfk_1" Association="Self.subboardusersubs_ibfk_1">
+            <End Role="users" EntitySet="users" />
+            <End Role="subboardusersubs" EntitySet="subboardusersubs" />
+          </AssociationSet>
+          <AssociationSet Name="subboardusersubs_ibfk_2" Association="Self.subboardusersubs_ibfk_2">
+            <End Role="subboards" EntitySet="subboards" />
+            <End Role="subboardusersubs" EntitySet="subboardusersubs" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="imageboardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -142,6 +276,8 @@
           <Property Name="created_on" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="comments" Relationship="Self.comments_ibfk_2" FromRole="posts" ToRole="comments" />
           <NavigationProperty Name="user" Relationship="Self.posts_ibfk_1" FromRole="posts" ToRole="users" />
+          <NavigationProperty Name="postlikes" Relationship="imageboardModel.postlikes_ibfk_2" FromRole="post" ToRole="postlike" />
+          <NavigationProperty Name="subboardpostjoins" Relationship="imageboardModel.subboardpostjoin_ibfk_1" FromRole="post" ToRole="subboardpostjoin" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -154,6 +290,8 @@
           <Property Name="created_on" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="comments" Relationship="Self.comments_ibfk_1" FromRole="users" ToRole="comments" />
           <NavigationProperty Name="posts" Relationship="Self.posts_ibfk_1" FromRole="users" ToRole="posts" />
+          <NavigationProperty Name="postlikes" Relationship="imageboardModel.postlikes_ibfk_1" FromRole="user" ToRole="postlike" />
+          <NavigationProperty Name="subboardusersubs" Relationship="imageboardModel.subboardusersubs_ibfk_1" FromRole="user" ToRole="subboardusersub" />
         </EntityType>
         <Association Name="comments_ibfk_1">
           <End Role="users" Type="Self.user" Multiplicity="1" />
@@ -223,7 +361,150 @@
             <End Role="users" EntitySet="users" />
             <End Role="posts" EntitySet="posts" />
           </AssociationSet>
+          <EntitySet Name="postlikes" EntityType="imageboardModel.postlike" />
+          <EntitySet Name="subboardpostjoins" EntityType="imageboardModel.subboardpostjoin" />
+          <EntitySet Name="subboards" EntityType="imageboardModel.subboard" />
+          <EntitySet Name="subboardusersubs" EntityType="imageboardModel.subboardusersub" />
+          <AssociationSet Name="postlikes_ibfk_1" Association="imageboardModel.postlikes_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="postlike" EntitySet="postlikes" />
+          </AssociationSet>
+          <AssociationSet Name="postlikes_ibfk_2" Association="imageboardModel.postlikes_ibfk_2">
+            <End Role="post" EntitySet="posts" />
+            <End Role="postlike" EntitySet="postlikes" />
+          </AssociationSet>
+          <AssociationSet Name="subboardpostjoin_ibfk_1" Association="imageboardModel.subboardpostjoin_ibfk_1">
+            <End Role="post" EntitySet="posts" />
+            <End Role="subboardpostjoin" EntitySet="subboardpostjoins" />
+          </AssociationSet>
+          <AssociationSet Name="subboardpostjoin_ibfk_2" Association="imageboardModel.subboardpostjoin_ibfk_2">
+            <End Role="subboard" EntitySet="subboards" />
+            <End Role="subboardpostjoin" EntitySet="subboardpostjoins" />
+          </AssociationSet>
+          <AssociationSet Name="subboardusersubs_ibfk_2" Association="imageboardModel.subboardusersubs_ibfk_2">
+            <End Role="subboard" EntitySet="subboards" />
+            <End Role="subboardusersub" EntitySet="subboardusersubs" />
+          </AssociationSet>
+          <AssociationSet Name="subboardusersubs_ibfk_1" Association="imageboardModel.subboardusersubs_ibfk_1">
+            <End Role="user" EntitySet="users" />
+            <End Role="subboardusersub" EntitySet="subboardusersubs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="postlike">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <Property Name="liked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="imageboardModel.postlikes_ibfk_1" FromRole="postlike" ToRole="user" />
+          <NavigationProperty Name="post" Relationship="imageboardModel.postlikes_ibfk_2" FromRole="postlike" ToRole="post" />
+        </EntityType>
+        <EntityType Name="subboardpostjoin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subBoard_id" Type="Int32" Nullable="false" />
+          <Property Name="subBoardName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="post_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="post" Relationship="imageboardModel.subboardpostjoin_ibfk_1" FromRole="subboardpostjoin" ToRole="post" />
+          <NavigationProperty Name="subboard" Relationship="imageboardModel.subboardpostjoin_ibfk_2" FromRole="subboardpostjoin" ToRole="subboard" />
+        </EntityType>
+        <EntityType Name="subboard">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="subboardpostjoins" Relationship="imageboardModel.subboardpostjoin_ibfk_2" FromRole="subboard" ToRole="subboardpostjoin" />
+          <NavigationProperty Name="subboardusersubs" Relationship="imageboardModel.subboardusersubs_ibfk_2" FromRole="subboard" ToRole="subboardusersub" />
+        </EntityType>
+        <EntityType Name="subboardusersub">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="subBoard_id" Type="Int32" Nullable="false" />
+          <Property Name="subBoardName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="isFavorite" Type="Boolean" />
+          <NavigationProperty Name="subboard" Relationship="imageboardModel.subboardusersubs_ibfk_2" FromRole="subboardusersub" ToRole="subboard" />
+          <NavigationProperty Name="user" Relationship="imageboardModel.subboardusersubs_ibfk_1" FromRole="subboardusersub" ToRole="user" />
+        </EntityType>
+        <Association Name="postlikes_ibfk_1">
+          <End Type="imageboardModel.user" Role="user" Multiplicity="1" />
+          <End Type="imageboardModel.postlike" Role="postlike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlike">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postlikes_ibfk_2">
+          <End Type="imageboardModel.post" Role="post" Multiplicity="1" />
+          <End Type="imageboardModel.postlike" Role="postlike" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="postlike">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardpostjoin_ibfk_1">
+          <End Type="imageboardModel.post" Role="post" Multiplicity="1" />
+          <End Type="imageboardModel.subboardpostjoin" Role="subboardpostjoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardpostjoin">
+              <PropertyRef Name="post_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardpostjoin_ibfk_2">
+          <End Type="imageboardModel.subboard" Role="subboard" Multiplicity="1" />
+          <End Type="imageboardModel.subboardpostjoin" Role="subboardpostjoin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subboard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardpostjoin">
+              <PropertyRef Name="subBoard_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardusersubs_ibfk_2">
+          <End Type="imageboardModel.subboard" Role="subboard" Multiplicity="1" />
+          <End Type="imageboardModel.subboardusersub" Role="subboardusersub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subboard">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardusersub">
+              <PropertyRef Name="subBoard_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="subboardusersubs_ibfk_1">
+          <End Type="imageboardModel.user" Role="user" Multiplicity="1" />
+          <End Type="imageboardModel.subboardusersub" Role="subboardusersub" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="subboardusersub">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -264,6 +545,45 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="created_on" ColumnName="created_on" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postlikes">
+            <EntityTypeMapping TypeName="imageboardModel.postlike">
+              <MappingFragment StoreEntitySet="postlikes">
+                <ScalarProperty Name="liked" ColumnName="liked" />
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subboardpostjoins">
+            <EntityTypeMapping TypeName="imageboardModel.subboardpostjoin">
+              <MappingFragment StoreEntitySet="subboardpostjoin">
+                <ScalarProperty Name="post_id" ColumnName="post_id" />
+                <ScalarProperty Name="subBoardName" ColumnName="subBoardName" />
+                <ScalarProperty Name="subBoard_id" ColumnName="subBoard_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subboards">
+            <EntityTypeMapping TypeName="imageboardModel.subboard">
+              <MappingFragment StoreEntitySet="subboards">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subboardusersubs">
+            <EntityTypeMapping TypeName="imageboardModel.subboardusersub">
+              <MappingFragment StoreEntitySet="subboardusersubs">
+                <ScalarProperty Name="isFavorite" ColumnName="isFavorite" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="subBoardName" ColumnName="subBoardName" />
+                <ScalarProperty Name="subBoard_id" ColumnName="subBoard_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

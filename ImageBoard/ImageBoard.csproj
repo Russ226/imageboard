@@ -202,10 +202,22 @@
     <Compile Include="Data\post.cs">
       <DependentUpon>ImageboardDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\postlike.cs">
+      <DependentUpon>ImageboardDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Repository\AccountRepo.cs" />
     <Compile Include="Data\Repository\Interfaces\IAccountRepo.cs" />
     <Compile Include="Data\Service\AccountService.cs" />
     <Compile Include="Data\Service\Interfaces\IAccountService.cs" />
+    <Compile Include="Data\subboard.cs">
+      <DependentUpon>ImageboardDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\subboardpostjoin.cs">
+      <DependentUpon>ImageboardDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\subboardusersub.cs">
+      <DependentUpon>ImageboardDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\user.cs">
       <DependentUpon>ImageboardDB.tt</DependentUpon>
     </Compile>
