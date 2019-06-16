@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageBoard.Data.Repository.Interfaces
+namespace ImageBoard.Data.Service.Interfaces
 {
-    public interface IPostRepo
+    public interface IBoardService
     {
-        IQueryable<PostModel> GetPostsByDate(string boardName);
-
-
+        
+        List<PostModel> GetRecentPost(string board, int page);
     }
 }

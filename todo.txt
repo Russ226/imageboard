@@ -1,0 +1,4 @@
+create dummy subredits
+	- make a way to go to this subreddit
+	- make dummy posts for testing
+create a a way to submit post

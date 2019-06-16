@@ -25,6 +25,14 @@ values('modernism');
 INSERT INTO imageboard.posts(user_id, username, link, title, created_on)
 VALUES((SELECT id FROM imageboard.users WHERE username = 'dude1'), 'dude1', 'https://i.imgur.com/QldC22h.jpg', 'cool bunny', NOW());
 
+INSERT INTO imageboard.subboardpostjoin(subboard_id, subboardName, post_id)
+VALUES((SELECT id FROM imageboard.subboards where name = 'waterColor'), 'waterColor', (SELECT id FROM imageboard.posts where title = 'cool bunny'));
+
 INSERT INTO imageboard.posts(user_id, username, link, title, created_on)
 VALUES((SELECT id FROM imageboard.users WHERE username = 'dude1'), 'dude1', 'https://i.imgur.com/C0yrAz4.jpg', 'Nice Dark Souls', NOW());
 
+INSERT INTO imageboard.subboardpostjoin(subboard_id, subboardName, post_id)
+VALUES((SELECT id FROM imageboard.subboards where name = 'waterColor'), 'waterColor', (SELECT id FROM imageboard.posts where title = 'Nice Dark Souls'));
+
+
+SELECt * FROM imageboard.subboardpostjoin;
