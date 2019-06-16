@@ -46,6 +46,10 @@ namespace ImageBoard
             container.RegisterType<IAccountRepo, AccountRepo>(new PerRequestLifetimeManager());
             container.RegisterType<IAccountService, AccountService>(new PerRequestLifetimeManager());
 
+            container.RegisterType<IPostRepo, PostRepo>(new PerRequestLifetimeManager());
+
+
+
             //DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 
             //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

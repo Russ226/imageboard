@@ -207,6 +207,8 @@
     </Compile>
     <Compile Include="Data\Repository\AccountRepo.cs" />
     <Compile Include="Data\Repository\Interfaces\IAccountRepo.cs" />
+    <Compile Include="Data\Repository\Interfaces\IPostRepo.cs" />
+    <Compile Include="Data\Repository\PostRepo.cs" />
     <Compile Include="Data\Service\AccountService.cs" />
     <Compile Include="Data\Service\Interfaces\IAccountService.cs" />
     <Compile Include="Data\subboard.cs">
@@ -225,6 +227,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Exceptions\UserExistsException.cs" />
+    <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
